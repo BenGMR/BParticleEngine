@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BLibMonoGame.dll" />
     <Content Include="Content\Square10x10.png" />
     <Content Include="Icon.ico" />
     <Content Include="Libraries\BLibMonoGame.dll" />
