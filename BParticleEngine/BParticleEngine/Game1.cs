@@ -12,11 +12,12 @@ using BLibMonoGame;
 namespace BParticleEngine
 {
 	public class Game1 : Game
-	{//Test for committing
+	{
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 
 		Sprite testSprite;
+        ParticleEngine engine;
 
 		public Game1 ()
 		{
@@ -36,6 +37,7 @@ namespace BParticleEngine
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 
 			testSprite = new Sprite (Content.Load<Texture2D> ("Square50x50"), Vector2.Zero, Color.White);
+            engine = new ParticleEngine();
 		}
 		protected override void Update (GameTime gameTime)
 		{
