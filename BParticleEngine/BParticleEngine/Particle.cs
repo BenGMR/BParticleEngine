@@ -14,16 +14,24 @@ namespace BParticleEngine
 	 * */
 	public class Particle : Sprite
 	{
-		private bool _fadeAway;
-		public bool FadeAway
+        
+        private bool _dead;
+        public bool Dead
         {
-            get{ return _fadeAway; }
-            set{ _fadeAway = value; }
+            get { return _dead; }
+        }
+            
+		private bool _fadeOut;
+		public bool FadeOut
+        {
+            get{ return _fadeOut; }
+            set{ _fadeOut = value; }
         }
 
 		private TimeSpan _timeAlive;
 		private TimeSpan _lifeTime;
-		public TimeSpan LifeTime {
+		public TimeSpan LifeTime 
+        {
 			get{ return _lifeTime; }
 			set{_lifeTime = value;}
 		}
@@ -41,11 +49,13 @@ namespace BParticleEngine
 		/// <param name="startPosition">Start position.</param>
 		/// <param name="tint">Color Tint.</param>
 		/// <param name="velocity">Particle Velocity.</param>
-		public Particle (Texture2D particleImage, Vector2 startPosition, Color tint, Vector2 velocity)
+        public Particle (Texture2D particleImage, Vector2 startPosition, Color tint, Vector2 velocity, TimeSpan lifeTime)
 			: base (particleImage, startPosition, tint)
 		{
 			_velocity = velocity;
 			_timeAlive = TimeSpan.Zero;
+            _lifeTime = lifeTime;
+            _fadeOut = false;
 		}
 
 		public override void Update (GameTime gameTime)
@@ -54,10 +64,22 @@ namespace BParticleEngine
 
 			_timeAlive += gameTime.ElapsedGameTime;
 
+
+
 			//fade lerping logic?
-			if (FadeAway)
+            if (_fadeOut && _tint.A >= 0)
 			{
-				_tint.A = (byte)(255.0f / (float)(LifeTime.TotalMilliseconds / _timeAlive.TotalMilliseconds));
+                _tint.A = (byte)(255.0f - MathHelper.Lerp(0f, 255f, (float)(_timeAlive.TotalMilliseconds / _lifeTime.TotalMilliseconds)));
+
+                if (_tint.A <= 0)
+                {
+                    
+                }
+
+                if (_timeAlive >= _lifeTime)
+                {
+                    _dead = true;
+                }
 			}
 
 			base.Update (gameTime);
@@ -65,7 +87,10 @@ namespace BParticleEngine
 
 		public override void Draw (SpriteBatch batch)
 		{
-			base.Draw (batch);
+            if (!_dead)
+            {
+                base.Draw (batch);
+            }
 		}
 	}
 }

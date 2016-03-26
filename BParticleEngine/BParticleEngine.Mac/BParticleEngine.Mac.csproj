@@ -82,5 +82,125 @@
     <BundleResource Include="..\BParticleEngine\Content\Square50x50.png">
       <Link>Content\Square50x50.png</Link>
     </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\arrowDown.png">
+      <Link>Content\arrowDown.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\arrowLeft.png">
+      <Link>Content\arrowLeft.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\arrowRight.png">
+      <Link>Content\arrowRight.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\arrowUp.png">
+      <Link>Content\arrowUp.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\audioOff.png">
+      <Link>Content\audioOff.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\audioOn.png">
+      <Link>Content\audioOn.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\barsHorizontal.png">
+      <Link>Content\barsHorizontal.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\barsVertical.png">
+      <Link>Content\barsVertical.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\button1.png">
+      <Link>Content\button1.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\button2.png">
+      <Link>Content\button2.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\button3.png">
+      <Link>Content\button3.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonA.png">
+      <Link>Content\buttonA.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonB.png">
+      <Link>Content\buttonB.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonL.png">
+      <Link>Content\buttonL.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonL1.png">
+      <Link>Content\buttonL1.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonL2.png">
+      <Link>Content\buttonL2.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonR.png">
+      <Link>Content\buttonR.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonR1.png">
+      <Link>Content\buttonR1.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonR2.png">
+      <Link>Content\buttonR2.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonSelect.png">
+      <Link>Content\buttonSelect.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonStart.png">
+      <Link>Content\buttonStart.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonX.png">
+      <Link>Content\buttonX.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\buttonY.png">
+      <Link>Content\buttonY.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\checkmark.png">
+      <Link>Content\checkmark.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\contrast.png">
+      <Link>Content\contrast.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\cross.png">
+      <Link>Content\cross.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\down.png">
+      <Link>Content\down.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\downLeft.png">
+      <Link>Content\downLeft.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\downRight.png">
+      <Link>Content\downRight.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\exclamation.png">
+      <Link>Content\exclamation.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\exit.png">
+      <Link>Content\exit.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\exitLeft.png">
+      <Link>Content\exitLeft.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\exitRight.png">
+      <Link>Content\exitRight.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\export.png">
+      <Link>Content\export.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\fastForward.png">
+      <Link>Content\fastForward.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\gamepad.png">
+      <Link>Content\gamepad.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\gamepad1.png">
+      <Link>Content\gamepad1.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\gamepad2.png">
+      <Link>Content\gamepad2.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\gamepad3.png">
+      <Link>Content\gamepad3.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\gamepad4.png">
+      <Link>Content\gamepad4.png</Link>
+    </BundleResource>
   </ItemGroup>
 </Project>

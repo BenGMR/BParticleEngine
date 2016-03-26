@@ -10,8 +10,6 @@
     <AssemblyName>BParticleEngine</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,6 +48,46 @@
     <None Include="Libraries\BLibMonoGame.dll" />
     <None Include="Content\Content.mgcb" />
     <None Include="Content\Square50x50.png" />
+    <None Include="Content\arrowDown.png" />
+    <None Include="Content\arrowLeft.png" />
+    <None Include="Content\arrowRight.png" />
+    <None Include="Content\arrowUp.png" />
+    <None Include="Content\audioOff.png" />
+    <None Include="Content\audioOn.png" />
+    <None Include="Content\barsHorizontal.png" />
+    <None Include="Content\barsVertical.png" />
+    <None Include="Content\button1.png" />
+    <None Include="Content\button2.png" />
+    <None Include="Content\button3.png" />
+    <None Include="Content\buttonA.png" />
+    <None Include="Content\buttonB.png" />
+    <None Include="Content\buttonL.png" />
+    <None Include="Content\buttonL1.png" />
+    <None Include="Content\buttonL2.png" />
+    <None Include="Content\buttonR.png" />
+    <None Include="Content\buttonR1.png" />
+    <None Include="Content\buttonR2.png" />
+    <None Include="Content\buttonSelect.png" />
+    <None Include="Content\buttonStart.png" />
+    <None Include="Content\buttonX.png" />
+    <None Include="Content\buttonY.png" />
+    <None Include="Content\checkmark.png" />
+    <None Include="Content\contrast.png" />
+    <None Include="Content\cross.png" />
+    <None Include="Content\down.png" />
+    <None Include="Content\downLeft.png" />
+    <None Include="Content\downRight.png" />
+    <None Include="Content\exclamation.png" />
+    <None Include="Content\exit.png" />
+    <None Include="Content\exitLeft.png" />
+    <None Include="Content\exitRight.png" />
+    <None Include="Content\export.png" />
+    <None Include="Content\fastForward.png" />
+    <None Include="Content\gamepad.png" />
+    <None Include="Content\gamepad1.png" />
+    <None Include="Content\gamepad2.png" />
+    <None Include="Content\gamepad3.png" />
+    <None Include="Content\gamepad4.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Libraries\" />
