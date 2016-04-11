@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using BLibMonoGame;
 
 namespace BParticleEngine
 {
@@ -17,6 +18,21 @@ namespace BParticleEngine
         {
             get{ return _autoSpawn; }
             set{ _autoSpawn = value; }
+        }
+
+        private Sprite _followSprite;
+
+        public Sprite FollowSprite
+        {
+            get{ return _followSprite; }
+            set{ _followSprite = value; }
+        }
+
+        private Color _particleTint;
+        public Color Tint
+        {
+            get{ return _particleTint; }
+            set{ _particleTint = value; }
         }
 
         private bool _randomColors;
@@ -46,6 +62,13 @@ namespace BParticleEngine
         {
             get{ return _spawnRate; }
             set{ _spawnRate = value; }
+        }
+           
+        private int _spawnCount;
+        public int SpawnCount
+        {
+            get{ return _spawnCount; }
+            set{ _spawnCount = value; }
         }
             
         private Texture2D[] _particleImages;
@@ -79,6 +102,8 @@ namespace BParticleEngine
             _random = new Random();
             _autoSpawn = true;
             _fadeOut = true;
+            _spawnCount = 1;
+            _spawnRate = new TimeSpan(0, 0, 0, 0, 100);
 		}
 
         public void AddParticle()
@@ -91,7 +116,7 @@ namespace BParticleEngine
              * 
              * */
 
-            _particles.Add(new Particle(_particleImages[_random.Next(0, _particleImages.Length)], _position, Color.Red, new Vector2(_random.Next(-5, 5), _random.Next(-5, 5)), _lifeTime));
+            _particles.Add(new Particle(_particleImages[_random.Next(0, _particleImages.Length)], _position, _particleTint, new Vector2(_random.Next(-5, 5), _random.Next(-5, 5)), _lifeTime));
 
             Particle newParticle = _particles[_particles.Count - 1];
             if (_randomColors)
@@ -110,8 +135,16 @@ namespace BParticleEngine
                 if (_elapsedTime >= _spawnRate)
                 {
                     _elapsedTime = TimeSpan.Zero;
-                    AddParticle();
+                    for (int i = 0; i < _spawnCount; i++)
+                    {
+                        AddParticle();
+                    }
                 }
+            }
+
+            if (_followSprite != null)
+            {
+                _position = _followSprite.Position - _followSprite.Origin;
             }
                 
 			for (int i = 0; i < _particles.Count; i++)

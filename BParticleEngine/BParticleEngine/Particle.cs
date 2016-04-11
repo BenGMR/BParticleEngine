@@ -14,7 +14,6 @@ namespace BParticleEngine
 	 * */
 	public class Particle : Sprite
 	{
-        
         private bool _dead;
         public bool Dead
         {
@@ -30,7 +29,7 @@ namespace BParticleEngine
 
 		private TimeSpan _timeAlive;
 		private TimeSpan _lifeTime;
-		public TimeSpan LifeTime 
+		public TimeSpan LifeTime
         {
 			get{ return _lifeTime; }
 			set{_lifeTime = value;}
@@ -63,18 +62,10 @@ namespace BParticleEngine
 			_position += _velocity;
 
 			_timeAlive += gameTime.ElapsedGameTime;
-
-
-
-			//fade lerping logic?
-            if (_fadeOut && _tint.A >= 0)
+			//fade lerping logic
+            if (_fadeOut)
 			{
-                _tint.A = (byte)(255.0f - MathHelper.Lerp(0f, 255f, (float)(_timeAlive.TotalMilliseconds / _lifeTime.TotalMilliseconds)));
-
-                if (_tint.A <= 0)
-                {
-                    
-                }
+                _tint.A = (byte)(255.0f - MathHelper.Lerp(0f, 255.0f, (float)(_timeAlive.TotalMilliseconds / _lifeTime.TotalMilliseconds)));
 
                 if (_timeAlive >= _lifeTime)
                 {

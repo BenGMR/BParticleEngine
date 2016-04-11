@@ -30,7 +30,6 @@ namespace BParticleEngine
 		{
 			
 			base.Initialize ();
-				
 		}
 			
 		protected override void LoadContent ()
@@ -38,7 +37,6 @@ namespace BParticleEngine
             IsMouseVisible = true;
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 
-			testSprite = new Sprite (Content.Load<Texture2D> ("Square50x50"), Vector2.Zero, Color.White);
             engine = new ParticleEngine(new TimeSpan(0, 0, 1), 
                 Content.Load<Texture2D>("arrowDown"),
                 Content.Load<Texture2D>("arrowUp"),
@@ -80,15 +78,21 @@ namespace BParticleEngine
                 Content.Load<Texture2D>("gamepad2"),
                 Content.Load<Texture2D>("gamepad3"),
                 Content.Load<Texture2D>("gamepad4"));
-            engine.Position = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
+
+            testSprite = new Sprite (Content.Load<Texture2D> ("Square50x50"), new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), Color.White);
+            testSprite.SetOriginToCenter();
+            
+            engine.Position = testSprite.Position - testSprite.Origin;
             engine.RandomColors = true;
-            engine.SpawnRate = new TimeSpan(0, 0, 0, 0, 50);
-            engine.Scale = new Vector2(2, 2);
+            //engine.SpawnRate = new TimeSpan(0, 0, 0, 0, 100);
+            engine.Scale = new Vector2(.5f, .5f);
             engine.FadeOut = true;
-            engine.AutoSpawn = false;
-
-
+            engine.AutoSpawn = true;
+            engine.SpawnCount = 5;
+            engine.FollowSprite = testSprite;
+            engine.Tint = Color.Purple;
 		}
+
 		protected override void Update (GameTime gameTime)
 		{
 			// For Mobile devices, this logic will close the Game when the Back button is pressed
@@ -98,15 +102,12 @@ namespace BParticleEngine
 			    Keyboard.GetState ().IsKeyDown (Keys.Escape)) {
 				Exit ();
 			}
-            if(engine.Particles.Count == 0)
-            {
-                engine.AddParticle();
-            }
+
             InputManager.Update();
 
             engine.Update(gameTime);
 
-            testSprite.Position += spriteSpeed;
+            //testSprite.Position += spriteSpeed;
 
             if(testSprite.Left <= 0 || testSprite.Right >= GraphicsDevice.Viewport.Width)
             {
@@ -125,7 +126,7 @@ namespace BParticleEngine
 		{
 			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
 
-			spriteBatch.Begin ();
+            spriteBatch.Begin (blendState: BlendState.NonPremultiplied);
 			testSprite.Draw (spriteBatch);
             engine.Draw(spriteBatch);
 			spriteBatch.End ();
