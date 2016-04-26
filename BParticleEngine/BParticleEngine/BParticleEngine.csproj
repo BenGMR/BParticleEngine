@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Libraries\BLibMonoGame.dll" />
     <None Include="Content\Content.mgcb" />
     <None Include="Content\Square50x50.png" />
     <None Include="Content\arrowDown.png" />
@@ -88,6 +87,7 @@
     <None Include="Content\gamepad2.png" />
     <None Include="Content\gamepad3.png" />
     <None Include="Content\gamepad4.png" />
+    <None Include="Libraries\BLibMonoGame.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Libraries\" />

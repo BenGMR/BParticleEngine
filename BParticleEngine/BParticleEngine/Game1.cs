@@ -18,7 +18,7 @@ namespace BParticleEngine
 
 		Sprite testSprite;
         ParticleEngine engine;
-        Vector2 spriteSpeed = new Vector2(5, 5);
+        Vector2 spriteSpeed = new Vector2(.5f, .5f);
 
         //TextSprite debugText;
 
@@ -84,16 +84,16 @@ namespace BParticleEngine
                 Content.Load<Texture2D>("gamepad4"));
 
             testSprite = new Sprite (Content.Load<Texture2D> ("Square50x50"), new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), Color.White);
-            testSprite.SetOriginToCenter();
+            testSprite.UseCenterOrigin = true;
             
-            engine.Position = testSprite.Position - testSprite.Origin;
+
             engine.RandomColors = true;
-            //engine.SpawnRate = new TimeSpan(0, 0, 0, 0, 100);
-            engine.Scale = new Vector2(.5f, .5f);
+            engine.SpawnRate = new TimeSpan(0, 0, 0, 0, 100);
+            engine.Scale = new Vector2(.1f, .1f);
             engine.FadeOut = true;
             engine.AutoSpawn = true;
             engine.SpawnCount = 5;
-            engine.FollowSprite = testSprite;
+            engine.FollowItem = testSprite;
             engine.Tint = Color.Purple;
             engine.AngleToShoot = 45;
             engine.AngleDeviation = 360;
@@ -114,7 +114,12 @@ namespace BParticleEngine
 
             engine.Update(gameTime);
 
-            //testSprite.Position += spriteSpeed;
+            testSprite.Position += spriteSpeed;
+
+            if(InputManager.KeyJustPressed(Keys.O))
+            {
+                testSprite.UseCenterOrigin = !testSprite.UseCenterOrigin;
+            }
 
             if(testSprite.Left <= 0 || testSprite.Right >= GraphicsDevice.Viewport.Width)
             {

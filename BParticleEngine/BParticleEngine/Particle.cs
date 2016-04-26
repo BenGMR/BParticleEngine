@@ -55,6 +55,7 @@ namespace BParticleEngine
 			_timeAlive = TimeSpan.Zero;
             _lifeTime = lifeTime;
             _fadeOut = false;
+            UseCenterOrigin = true;
 		}
 
 		public override void Update (GameTime gameTime)

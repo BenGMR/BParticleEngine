@@ -20,12 +20,12 @@ namespace BParticleEngine
             set{ _autoSpawn = value; }
         }
 
-        private Sprite _followSprite;
+        private IPositionable _followItem;
 
-        public Sprite FollowSprite
+        public IPositionable FollowItem
         {
-            get{ return _followSprite; }
-            set{ _followSprite = value; }
+            get{ return _followItem; }
+            set{ _followItem = value; }
         }
 
         private Color _particleTint;
@@ -196,9 +196,9 @@ namespace BParticleEngine
             }
 
             //is there a sprite the engine should follow?
-            if (_followSprite != null)
+            if (_followItem != null)
             {
-                _position = _followSprite.Position - _followSprite.Origin;
+                _position = _followItem.Position;
             }
                 
 			for (int i = 0; i < _particles.Count; i++)
