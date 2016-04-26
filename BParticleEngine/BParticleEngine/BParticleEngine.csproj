@@ -93,4 +93,9 @@
     <Folder Include="Libraries\" />
     <Folder Include="Content\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\DebugFont.spritefont">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

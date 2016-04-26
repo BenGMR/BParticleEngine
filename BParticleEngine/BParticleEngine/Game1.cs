@@ -20,6 +20,8 @@ namespace BParticleEngine
         ParticleEngine engine;
         Vector2 spriteSpeed = new Vector2(5, 5);
 
+        //TextSprite debugText;
+
 		public Game1 ()
 		{
 			graphics = new GraphicsDeviceManager (this);
@@ -37,7 +39,9 @@ namespace BParticleEngine
             IsMouseVisible = true;
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 
-            engine = new ParticleEngine(new TimeSpan(0, 0, 1), 
+            //debugText = new TextSprite(Content.Load<SpriteFont>("DebugFont"), "", Vector2.Zero, Color.Black);
+
+            engine = new ParticleEngine(new TimeSpan(0, 0, 2), 
                 Content.Load<Texture2D>("arrowDown"),
                 Content.Load<Texture2D>("arrowUp"),
                 Content.Load<Texture2D>("arrowLeft"),
@@ -91,6 +95,9 @@ namespace BParticleEngine
             engine.SpawnCount = 5;
             engine.FollowSprite = testSprite;
             engine.Tint = Color.Purple;
+            engine.AngleToShoot = 45;
+            engine.AngleDeviation = 360;
+
 		}
 
 		protected override void Update (GameTime gameTime)

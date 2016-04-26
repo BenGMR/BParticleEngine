@@ -93,7 +93,28 @@ namespace BParticleEngine
 			get { return _particles; }
 		}
 
-        public ParticleEngine (TimeSpan particleLifeTime,params Texture2D[] particleImages)
+        private float? angleToShoot = null;
+        public float? AngleToShoot
+        {
+            get{ return angleToShoot.Value; }
+            set{ angleToShoot = value; }
+        }
+
+        private int _angleDeviation;
+        public int AngleDeviation
+        {
+            get{ return _angleDeviation; }
+            set{ _angleDeviation = value; }
+        }
+
+        private float _speed;
+        public float ParticleSpeed
+        {
+            get{ return _speed; }
+            set { _speed = value; }
+        }
+
+        public ParticleEngine (TimeSpan particleLifeTime, params Texture2D[] particleImages)
 		{
 			_particles = new List<Particle> ();
             _particleImages = particleImages;
@@ -104,6 +125,7 @@ namespace BParticleEngine
             _fadeOut = true;
             _spawnCount = 1;
             _spawnRate = new TimeSpan(0, 0, 0, 0, 100);
+            _speed = 3;
 		}
 
         public void AddParticle()
@@ -115,10 +137,34 @@ namespace BParticleEngine
              * time? <- comes from particle engine itself
              * 
              * */
+            Vector2 particleSpeed = Vector2.Zero;
 
-            _particles.Add(new Particle(_particleImages[_random.Next(0, _particleImages.Length)], _position, _particleTint, new Vector2(_random.Next(-5, 5), _random.Next(-5, 5)), _lifeTime));
+            //has the programmer set an angle to shoot at?
+            if (!angleToShoot.HasValue)
+            {
+                //if not, set the particles speed to randomDirection * speed
+                float randomAngle = _random.Next(0, 361);
+
+                particleSpeed = randomAngle.DegreeToVector();
+
+                particleSpeed.Normalize();
+
+                particleSpeed *= _speed;
+            }
+            else
+            {
+                //if the angle to shoot was set, shoot at that angle
+                particleSpeed = (angleToShoot.Value + _random.Next(_angleDeviation* -1, _angleDeviation+1)%360).DegreeToVector();
+
+                particleSpeed.Normalize();
+
+                particleSpeed *= _speed;
+            }
+
+            _particles.Add(new Particle(_particleImages[_random.Next(0, _particleImages.Length)], _position, _particleTint, particleSpeed, _lifeTime));
 
             Particle newParticle = _particles[_particles.Count - 1];
+
             if (_randomColors)
             {
                 newParticle.Tint = new Color(_random.Next(0, 255), _random.Next(0, 255), _random.Next(0, 255), 255);
@@ -129,12 +175,19 @@ namespace BParticleEngine
 
 		public void Update(GameTime gameTime)
 		{
+            //is the engine auto spawning particles?
             if (_autoSpawn)
             {
+                //keep track of time
                 _elapsedTime += gameTime.ElapsedGameTime;
+
+                //is it time to shoot out particles?
                 if (_elapsedTime >= _spawnRate)
                 {
+                    //reset elapsedTime
                     _elapsedTime = TimeSpan.Zero;
+
+                    //spawn X many particles
                     for (int i = 0; i < _spawnCount; i++)
                     {
                         AddParticle();
@@ -142,6 +195,7 @@ namespace BParticleEngine
                 }
             }
 
+            //is there a sprite the engine should follow?
             if (_followSprite != null)
             {
                 _position = _followSprite.Position - _followSprite.Origin;
