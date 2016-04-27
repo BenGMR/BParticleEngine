@@ -41,6 +41,19 @@ namespace BParticleEngine
 			set{ _velocity = value; }
 		}
 
+        private float _gravForce;
+        public float GravityForce
+        {
+            get{ return _gravForce; }
+            set{ _gravForce = value; }
+        }
+        private bool _gravity;
+        public bool UseGravity
+        {
+            get{ return _gravity; }
+            set{ _gravity = value; }
+        }
+
 		/// <summary>
 		/// Initializes a single particle
 		/// </summary>
@@ -55,6 +68,8 @@ namespace BParticleEngine
 			_timeAlive = TimeSpan.Zero;
             _lifeTime = lifeTime;
             _fadeOut = false;
+            _gravForce = .1f;
+            _gravity = false;
             UseCenterOrigin = true;
 		}
 
@@ -62,7 +77,13 @@ namespace BParticleEngine
 		{
 			_position += _velocity;
 
+            if (_gravity)
+            {
+                _velocity.Y += _gravForce;
+            }
+
 			_timeAlive += gameTime.ElapsedGameTime;
+
 			//fade lerping logic
             if (_fadeOut)
 			{

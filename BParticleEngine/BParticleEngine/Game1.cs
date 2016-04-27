@@ -12,13 +12,13 @@ using BLibMonoGame;
 namespace BParticleEngine
 {
 	public class Game1 : Game
-	{
+    {
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 
 		Sprite testSprite;
         ParticleEngine engine;
-        Vector2 spriteSpeed = new Vector2(.5f, .5f);
+        Vector2 spriteSpeed = new Vector2(0f, 0f);
 
         //TextSprite debugText;
 
@@ -41,63 +41,26 @@ namespace BParticleEngine
 
             //debugText = new TextSprite(Content.Load<SpriteFont>("DebugFont"), "", Vector2.Zero, Color.Black);
 
-            engine = new ParticleEngine(new TimeSpan(0, 0, 2), 
-                Content.Load<Texture2D>("arrowDown"),
-                Content.Load<Texture2D>("arrowUp"),
-                Content.Load<Texture2D>("arrowLeft"),
-                Content.Load<Texture2D>("arrowRight"),
-                Content.Load<Texture2D>("audioOff"),
-                Content.Load<Texture2D>("audioOn"),
-                Content.Load<Texture2D>("barsHorizontal"),
-                Content.Load<Texture2D>("barsVertical"),
-                Content.Load<Texture2D>("button1"),
-                Content.Load<Texture2D>("button2"),
-                Content.Load<Texture2D>("button3"),
-                Content.Load<Texture2D>("buttonA"),
-                Content.Load<Texture2D>("buttonB"),
-                Content.Load<Texture2D>("buttonL"),
-                Content.Load<Texture2D>("buttonL1"),
-                Content.Load<Texture2D>("buttonL2"),
-                Content.Load<Texture2D>("buttonR"),
-                Content.Load<Texture2D>("buttonR1"),
-                Content.Load<Texture2D>("buttonR2"),
-                Content.Load<Texture2D>("buttonSelect"),
-                Content.Load<Texture2D>("buttonStart"),
-                Content.Load<Texture2D>("buttonX"),
-                Content.Load<Texture2D>("buttonY"),
-                Content.Load<Texture2D>("checkmark"),
-                Content.Load<Texture2D>("contrast"),
-                Content.Load<Texture2D>("cross"),
-                Content.Load<Texture2D>("down"),
-                Content.Load<Texture2D>("downLeft"),
-                Content.Load<Texture2D>("downRight"),
-                Content.Load<Texture2D>("exclamation"),
-                Content.Load<Texture2D>("exit"),
-                Content.Load<Texture2D>("exitLeft"),
-                Content.Load<Texture2D>("exitRight"),
-                Content.Load<Texture2D>("export"),
-                Content.Load<Texture2D>("fastForward"),
-                Content.Load<Texture2D>("gamepad"),
-                Content.Load<Texture2D>("gamepad1"),
-                Content.Load<Texture2D>("gamepad2"),
-                Content.Load<Texture2D>("gamepad3"),
-                Content.Load<Texture2D>("gamepad4"));
+            engine = new ParticleEngine(new TimeSpan(0, 0, 0, 2, 0), 
+                Content.Load<Texture2D>("Square50x50"));
 
             testSprite = new Sprite (Content.Load<Texture2D> ("Square50x50"), new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), Color.White);
+
             testSprite.UseCenterOrigin = true;
-            
 
             engine.RandomColors = true;
-            engine.SpawnRate = new TimeSpan(0, 0, 0, 0, 100);
-            engine.Scale = new Vector2(.1f, .1f);
+            engine.SpawnRate = new TimeSpan(0, 0, 0, 0, 1000);
+            engine.Scale = new Vector2(.5f, .5f);
             engine.FadeOut = true;
             engine.AutoSpawn = true;
             engine.SpawnCount = 5;
             engine.FollowItem = testSprite;
             engine.Tint = Color.Purple;
-            engine.AngleToShoot = 45;
-            engine.AngleDeviation = 360;
-
+            engine.AngleToShoot = 0;
+            engine.AngleDeviation = 0;
+            //engine.UseGravity = true;
+            //engine.GravityScale = 1;
+            engine.ParticleSpeed = 0.1f;
 		}
 
 		protected override void Update (GameTime gameTime)
@@ -114,12 +77,11 @@ namespace BParticleEngine
 
             engine.Update(gameTime);
 
-            testSprite.Position += spriteSpeed;
+            //engine.AngleToShoot =  180f.DegreeToVector().VectorToDegreeAngle().ToFloat();
 
-            if(InputManager.KeyJustPressed(Keys.O))
-            {
-                testSprite.UseCenterOrigin = !testSprite.UseCenterOrigin;
-            }
+            engine.AngleToShoot = spriteSpeed.VectorToDegreeAngle().ToFloat() + 180f;
+
+            testSprite.Position += spriteSpeed;
 
             if(testSprite.Left <= 0 || testSprite.Right >= GraphicsDevice.Viewport.Width)
             {

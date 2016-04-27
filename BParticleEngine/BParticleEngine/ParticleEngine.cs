@@ -12,6 +12,13 @@ namespace BParticleEngine
 
         private TimeSpan _elapsedTime;
 
+        private bool _useGravity;
+        public bool UseGravity
+        {
+            get { return _useGravity; }
+            set { _useGravity = value; }
+        }
+
         private bool _autoSpawn;
 
         public bool AutoSpawn
@@ -114,6 +121,13 @@ namespace BParticleEngine
             set { _speed = value; }
         }
 
+        private float _gravityScale;
+        public float GravityScale
+        {
+            get{ return _gravityScale; }
+            set{ _gravityScale = value; }
+        }
+
         public ParticleEngine (TimeSpan particleLifeTime, params Texture2D[] particleImages)
 		{
 			_particles = new List<Particle> ();
@@ -126,17 +140,12 @@ namespace BParticleEngine
             _spawnCount = 1;
             _spawnRate = new TimeSpan(0, 0, 0, 0, 100);
             _speed = 3;
+            _useGravity = false;
+            _gravityScale = 1;
 		}
 
         public void AddParticle()
         {
-            /*
-             * What do we need for this?
-             * texture <- need a list of textures for this engine. randomly choose a texture
-             * where will it shoot? <- some angle
-             * time? <- comes from particle engine itself
-             * 
-             * */
             Vector2 particleSpeed = Vector2.Zero;
 
             //has the programmer set an angle to shoot at?
@@ -154,7 +163,7 @@ namespace BParticleEngine
             else
             {
                 //if the angle to shoot was set, shoot at that angle
-                particleSpeed = (angleToShoot.Value + _random.Next(_angleDeviation* -1, _angleDeviation+1)%360).DegreeToVector();
+                particleSpeed = (angleToShoot.Value + _random.Next(_angleDeviation * -1, _angleDeviation+1)%360).DegreeToVector();
 
                 particleSpeed.Normalize();
 
@@ -165,12 +174,21 @@ namespace BParticleEngine
 
             Particle newParticle = _particles[_particles.Count - 1];
 
+            newParticle.UseGravity = _useGravity;
+
+            if (_useGravity)
+            {
+                newParticle.GravityForce *= _gravityScale;
+            }
+
             if (_randomColors)
             {
                 newParticle.Tint = new Color(_random.Next(0, 255), _random.Next(0, 255), _random.Next(0, 255), 255);
             }
             newParticle.Scale = _scale;
             newParticle.FadeOut = _fadeOut;
+
+           
         }
 
 		public void Update(GameTime gameTime)
