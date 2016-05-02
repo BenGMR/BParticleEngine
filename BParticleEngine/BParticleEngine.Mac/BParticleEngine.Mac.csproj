@@ -86,5 +86,17 @@
     <BundleResource Include="..\BParticleEngine\Content\Square50x50.png">
       <Link>Content\Square50x50.png</Link>
     </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\Particle_ex1.png">
+      <Link>Content\Particle_ex1.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\circle.png">
+      <Link>Content\circle.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\diamond.png">
+      <Link>Content\diamond.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\BParticleEngine\Content\star.png">
+      <Link>Content\star.png</Link>
+    </BundleResource>
   </ItemGroup>
 </Project>

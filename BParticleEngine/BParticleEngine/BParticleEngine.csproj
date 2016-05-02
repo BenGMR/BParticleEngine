@@ -48,6 +48,10 @@
     <None Include="Content\Content.mgcb" />
     <None Include="Content\Square50x50.png" />
     <None Include="Libraries\BLibMonoGame.dll" />
+    <None Include="Content\Particle_ex1.png" />
+    <None Include="Content\circle.png" />
+    <None Include="Content\diamond.png" />
+    <None Include="Content\star.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Libraries\" />

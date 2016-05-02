@@ -19,8 +19,8 @@ namespace BParticleEngine
 		Sprite testSprite;
         ParticleEngine engine;
         Vector2 spriteSpeed = new Vector2(0f, 0f);
-
-        //TextSprite debugText;
+        int highestParticleCount = 0;
+        TextSprite debugText;
 
 		public Game1 ()
 		{
@@ -39,28 +39,24 @@ namespace BParticleEngine
             IsMouseVisible = true;
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 
-            //debugText = new TextSprite(Content.Load<SpriteFont>("DebugFont"), "", Vector2.Zero, Color.Black);
+            debugText = new TextSprite(Content.Load<SpriteFont>("DebugFont"), "", Vector2.Zero, Color.Black);
 
-            engine = new ParticleEngine(new TimeSpan(0, 0, 0, 2, 0), 
-                Content.Load<Texture2D>("Square50x50"));
+            engine = new ParticleEngine(new Vector2(100, 100), Vector2.One, Color.White, 3, new TimeSpan(0, 0, 0, 0, 1000), new TimeSpan(0, 0, 0, 0, 100),  
+                Content.Load<Texture2D>("circle"),
+                Content.Load<Texture2D>("diamond"),
+                Content.Load<Texture2D>("star"));
 
             testSprite = new Sprite (Content.Load<Texture2D> ("Square50x50"), new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), Color.White);
 
             testSprite.UseCenterOrigin = true;
 
+            engine.SpawnCount = 20;
+            engine.ParticleSpeed = 2f;
+            engine.Scale = new Vector2(1f, 1f);
             engine.RandomColors = true;
-            engine.SpawnRate = new TimeSpan(0, 0, 0, 0, 1000);
-            engine.Scale = new Vector2(.5f, .5f);
-            engine.FadeOut = true;
-            engine.AutoSpawn = true;
-            engine.SpawnCount = 5;
+            engine.TargetAlpha = 0;
             engine.FollowItem = testSprite;
-            engine.Tint = Color.Purple;
-            engine.AngleToShoot = 0;
-            engine.AngleDeviation = 0;
-            //engine.UseGravity = true;
-            //engine.GravityScale = 1;
-            engine.ParticleSpeed = 0.1f;
+            engine.LifeTimeDeviation = TimeSpan.FromMilliseconds(1000);
 		}
 
 		protected override void Update (GameTime gameTime)
@@ -73,13 +69,33 @@ namespace BParticleEngine
 				Exit ();
 			}
 
+            debugText.Text = string.Format("Particles in use: {0}\nMax calculated Particles: {1}\nPool Count: {2}", engine.Particles.Count, engine.MaxParticles, engine.ParticlePoolCount);
+
             InputManager.Update();
 
+            if(InputManager.KeyJustPressed(Keys.Up))
+            {
+                engine.SpawnCount++;
+            }
+            else if(InputManager.KeyJustPressed(Keys.Down))
+            {
+                engine.SpawnCount--;
+            }
+
+            if(InputManager.KeyJustPressed(Keys.P))
+            {
+                engine.TargetScale = Vector2.Zero;
+            }
             engine.Update(gameTime);
+
+            if(highestParticleCount < engine.Particles.Count)
+            {
+                highestParticleCount = engine.Particles.Count;
+            }
 
             //engine.AngleToShoot =  180f.DegreeToVector().VectorToDegreeAngle().ToFloat();
 
-            engine.AngleToShoot = spriteSpeed.VectorToDegreeAngle().ToFloat() + 180f;
+            //engine.AngleToShoot = spriteSpeed.VectorToDegreeAngle().ToFloat() + 180f;
 
             testSprite.Position += spriteSpeed;
 
@@ -101,8 +117,9 @@ namespace BParticleEngine
 			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
 
             spriteBatch.Begin (blendState: BlendState.NonPremultiplied);
-			testSprite.Draw (spriteBatch);
             engine.Draw(spriteBatch);
+            testSprite.Draw (spriteBatch);
+            debugText.Draw(spriteBatch);
 			spriteBatch.End ();
             
 			base.Draw (gameTime);
