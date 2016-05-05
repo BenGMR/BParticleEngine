@@ -39,24 +39,57 @@ namespace BParticleEngine
             IsMouseVisible = true;
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 
-            debugText = new TextSprite(Content.Load<SpriteFont>("DebugFont"), "", Vector2.Zero, Color.Black);
-
-            engine = new ParticleEngine(new Vector2(100, 100), Vector2.One, Color.White, 3, new TimeSpan(0, 0, 0, 0, 1000), new TimeSpan(0, 0, 0, 0, 100),  
-                Content.Load<Texture2D>("circle"),
-                Content.Load<Texture2D>("diamond"),
-                Content.Load<Texture2D>("star"));
-
+            debugText = new TextSprite(Content.Load<SpriteFont>("DebugFont"), "", Vector2.Zero, Color.White);
             testSprite = new Sprite (Content.Load<Texture2D> ("Square50x50"), new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), Color.White);
 
             testSprite.UseCenterOrigin = true;
 
+
+            engine = new ParticleEngine(
+                new Vector2(100, 100), //Engine position
+                Vector2.One, //Scale
+                Color.White, //Tint
+                3, //SpawnCount
+                new TimeSpan(0, 0, 0, 0, 1000), //LifeTime
+                new TimeSpan(0, 0, 0, 0, 1000),  //SpawnRate
+                Content.Load<Texture2D>("circle"),//params Texture2D[]
+                Content.Load<Texture2D>("diamond"),
+                Content.Load<Texture2D>("star"));
+            
             engine.SpawnCount = 20;
-            engine.ParticleSpeed = 2f;
+
+            engine.LifeTime = new TimeSpan(0, 0, 0, 0, 1000);
+
+            engine.SpawnRate = new TimeSpan(0, 0, 0, 0, 1100);
+
+            engine.ParticleSpeed = 4f;
+
             engine.Scale = new Vector2(1f, 1f);
+
             engine.RandomColors = true;
+
+            engine.RandomSpeed = true;
+
+            engine.AngleToShoot = 0;
+
             engine.TargetAlpha = 0;
+
+            engine.TargetRotation = 90;
+
+            engine.TargetScale = new Vector2(2, 2);
+
+            engine.AngleDeviation = 30;
+
+            //engine.LifeTimeDeviation = TimeSpan.FromMilliseconds(1000);
+
             engine.FollowItem = testSprite;
-            engine.LifeTimeDeviation = TimeSpan.FromMilliseconds(1000);
+
+            engine.UseGravity = true;
+
+            engine.GravityScale = 1f;
+
+            engine.AutoSpawn = true;
+
 		}
 
 		protected override void Update (GameTime gameTime)
@@ -65,11 +98,11 @@ namespace BParticleEngine
 			// Exit() is obsolete on iOS
 			#if !__IOS__
 			if (GamePad.GetState (PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-			    Keyboard.GetState ().IsKeyDown (Keys.Escape)) {
+                Keyboard.GetState ().IsKeyDown (Keys.Escape)) {
 				Exit ();
 			}
 
-            debugText.Text = string.Format("Particles in use: {0}\nMax calculated Particles: {1}\nPool Count: {2}", engine.Particles.Count, engine.MaxParticles, engine.ParticlePoolCount);
+            debugText.Text = string.Format("Particles in use: {0}\nMax calculated Particles: {1}\nPool Count: {2}\n\nSpawnCount: {3}\nLifeTime (ms): {4}\nSpawnRate: {5}", engine.Particles.Count, engine.MaxParticles, engine.ParticlePoolCount, engine.SpawnCount, engine.LifeTime.TotalMilliseconds, engine.SpawnRate.TotalMilliseconds);
 
             InputManager.Update();
 
@@ -114,7 +147,7 @@ namespace BParticleEngine
 		}
 		protected override void Draw (GameTime gameTime)
 		{
-			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
+            graphics.GraphicsDevice.Clear (Color.Black);
 
             spriteBatch.Begin (blendState: BlendState.NonPremultiplied);
             engine.Draw(spriteBatch);

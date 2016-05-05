@@ -94,14 +94,16 @@ namespace BParticleEngine
         public TimeSpan SpawnRate
         {
             get{ return _spawnRate; }
-            set{ _spawnRate = value; }
+            set{ _spawnRate = value; if (_spawnRate.TotalMilliseconds <= 16)
+                    _spawnRate = new TimeSpan(0, 0, 0, 0, 16);}
         }
            
         private int _spawnCount;
         public int SpawnCount
         {
             get{ return _spawnCount; }
-            set{ _spawnCount = value; }
+            set{ _spawnCount = value; if (_spawnCount <= 0)
+                    _spawnCount = 0;}
         }
             
         private Texture2D[] _particleImages;
@@ -155,8 +157,8 @@ namespace BParticleEngine
             set{ _gravityScale = value; }
         }
 
-        private float _rotateToShootAngle;
-        public float RotateTowardsShootAngle
+        private bool _rotateToShootAngle;
+        public bool RotateTowardsShootAngle
         {
             get{ return _rotateToShootAngle; }
             set{ _rotateToShootAngle = value; }
@@ -223,9 +225,11 @@ namespace BParticleEngine
 
             //the pool of particles will be the 1.5 times the maximum number of particles will ever be on screen
             //with the current spawnrate, spawncount, and lifetime
-            _particlePool = new Particle[0];
-
-            ExpandParticlePool();
+            _particlePool = new Particle[MaxParticles];
+            for (int i = 0; i < _particlePool.Length; i++)
+            {
+                _particlePool[i] = new Particle(_particleImages[_random.Next(0, _particleImages.Length)], _position, _particleTint, _particleSpeed, _scale, _rotation, _lifeTime);
+            }
 		}
 
         private Particle GetAvailableParticle()
@@ -243,6 +247,10 @@ namespace BParticleEngine
             int newestParticle = _particlePool.Length;
             ExpandParticlePool();
 
+            if (newestParticle >= _particlePool.Length)
+            {
+                return null;
+            }
             return _particlePool[newestParticle];
         }
 
@@ -250,7 +258,7 @@ namespace BParticleEngine
         {
             //if this ever gets called then either SpawnCount, LifeTime, or SpawnRate were changed,
             //recalculate the new max size of the array
-            Particle[] newPool = new Particle[(MaxParticles * 1.5f).ToInt()];
+            Particle[] newPool = new Particle[((MaxParticles * 1.5f).ToInt())];
             _particlePool.CopyTo(newPool, 0);
             int newStartIndex = _particlePool.Length;
             _particlePool = newPool;
@@ -286,13 +294,20 @@ namespace BParticleEngine
                 }
                 else
                 {
-                    _particleSpeed *= new Vector2(_random.Next(0, (int)_speed + 1), _random.Next(0, (int)_speed + 1));
+                    _particleSpeed *= new Vector2( (float) _random.NextDouble() * _speed, (float)_random.NextDouble() * (int)_speed + 1);
                 }
             }
 
-            _particles.Add(GetAvailableParticle());
+            //find the latest particle we can use
+            Particle newParticle = GetAvailableParticle();
 
-            Particle newParticle = _particles[_particles.Count - 1];
+            //This can only happen because of LifeTimeDeviation
+            if (newParticle == null)
+            {
+                return;
+            }
+
+            _particles.Add(newParticle);
 
             newParticle.Texture = _particleImages[_random.Next(0, _particleImages.Length)];
             newParticle.Position = _position;
@@ -302,7 +317,10 @@ namespace BParticleEngine
             newParticle.Rotation = _rotation;
             newParticle.LifeTime = _lifeTime + TimeSpan.FromMilliseconds(_random.Next((int)-LifeTimeDeviation.TotalMilliseconds, (int)LifeTimeDeviation.TotalMilliseconds));
 
-
+            if (_rotateToShootAngle)
+            {
+                newParticle.Rotation = _particleSpeed.VectorToDegreeAngle().ToFloat();
+            }
 
 
             //make proper adjustments to the particle that was added
